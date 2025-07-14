@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
 const Collections = () => {
-  const { products , search , showSearch } = useShopContext(); //resume here making search feature ************************
+  const { products , search , showSearch } = useShopContext();
   const [showFilters, setShowFilters] = React.useState(false);
   const [filteredProducts, setFilteredProducts] = React.useState(products);
   const [selectedCategory, setSelectedCategory] = React.useState([]);
@@ -40,6 +40,10 @@ const Collections = () => {
 
   const applyFilters = () => {
     let filtered = products;
+    if(showSearch && search){
+      filtered = filtered.filter((item) => { return item.name.toLowerCase().includes(search.toLowerCase())})
+      
+    }
   
     if (selectedCategory.length > 0) {
       filtered = filtered.filter((product) => {
@@ -82,7 +86,7 @@ const Collections = () => {
 
 useEffect(() => {
 applyFilters();
-},[selectedCategory,selectedSubCategory])
+},[selectedCategory,selectedSubCategory , search , showSearch])
 
 
 
