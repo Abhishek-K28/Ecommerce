@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
+import RelatedProduct from "../components/RelatedProduct";
+
 
 const Product = () => {
-  const { products , currency} = useShopContext();
+  const { products , currency , addtoCart} = useShopContext();
   const { productId } = useParams();
   const [productData, setProductData] = useState("");
   const [Image, setImage] = useState("");
@@ -19,7 +21,7 @@ const Product = () => {
       }
     });
   };
-
+ 
   
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const Product = () => {
   </div>
 
   {/* ------------------Cart Buttons---------------------- */}
-  <button className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">ADD TO CART</button>
+  <button  onClick={() => {addtoCart(productData._id , size)}} className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700">ADD TO CART</button>
   <hr className="mt-8 sm:4/5" />
 
   {/*----------------Product Return available or delivery Details--------------- */}
@@ -93,9 +95,19 @@ const Product = () => {
 
 
    {/*------------Description and Review section */}
-   <div className="">
-
+   <div className="mt-20">
+    <div className="flex">
+  <b className="border px-5 py-3 text-sm">Description</b>
+  <p className="border px-5 py-3 text-sm ml-0.5">Reviews (122)</p>
+    </div>
+    <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500 mt-0.5">
+     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque sit amet nobis unde harum minus animi laudantium atque corrupti sed voluptates esse quo architecto vitae expedita veniam itaque, recusandae sapiente nisi delectus. Voluptatum laboriosam reprehenderit explicabo temporibus tempora veritatis ab.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, voluptate deserunt neque eveniet ipsa minima, consequuntur sit voluptates temporibus molestiae tenetur, voluptatum tempore dicta sed facere. Dolore obcaecati incidunt alias, cumque, quod veritatis delectus dolorum possimus, ducimus et illum qui quaerat id voluptas? Tenetur sunt sint, perspiciatis voluptates recusandae sapiente?</p>
+    </div>
    </div>
+
+   {/*------------------Display related product--------------------- */}
+   <RelatedProduct category={productData.category } subcategory={productData.subcategory}/>
 
   </div>
 

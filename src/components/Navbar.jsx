@@ -6,7 +6,7 @@ import { useShopContext } from '../context/ShopContext'
 const Navbar = () => {
 
   const [visible, setVisible] = React.useState(false);
-  const {setShowSearch} = useShopContext();
+  const {setShowSearch , getCartItemCount} = useShopContext();
   
 
   return (
@@ -49,7 +49,7 @@ const Navbar = () => {
           </div>
           <Link to="/cart" className='relative'>
             <img src={assets.cart_icon} alt='Cart_Icon' className='w-5 cursor-pointer'/>
-            <span className='absolute top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1'>{0}</span>
+            <span className='absolute top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1'>{getCartItemCount()}</span>
             </Link>
             <img onClick={()=> setVisible(true)} src={assets.menu_icon} alt='Menu_Icon' className='w-5 cursor-pointer sm:hidden' />
             
