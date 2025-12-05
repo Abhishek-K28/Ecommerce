@@ -29,7 +29,7 @@ const onChangeHandler = (event) => {
    const value = event.target.value;
 
    setFormData(data =>  {return {...data, [name]:value}})
-   setFormData({...formData , [name] : value})
+  
 }
 
 const onSubmitHandler = async (e) => {
