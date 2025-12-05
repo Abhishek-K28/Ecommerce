@@ -32,7 +32,7 @@ const addProduct = async (req, res) => {
 
     const order = ["S", "M", "L", "XL", "XXL"];
     const sortedSizes = JSON.parse(sizes).sort((a, b) => {
-   return order.indexOf(a) - order.indexOf(b);
+       return order.indexOf(a) - order.indexOf(b);
                             });
 
     const product = new productModel({

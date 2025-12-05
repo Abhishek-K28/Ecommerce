@@ -1,6 +1,7 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import razorpay from "razorpay"
 
 
 //global variables
@@ -10,6 +11,12 @@ const deliveryCharges = 10
 
 //GATEWAY INTIALIZATION
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const razorpayInstance = new  razorpay(
+   {
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+   }
+)
 
 //place order using cod
 const placeOrder = async(req ,res) =>{
@@ -109,9 +116,31 @@ const verifyStripe = async(req,res) => {
 //place order using razorpay
 const placeOrderRazorpay = async(req ,res) => {
      try{
-      
+        const {userId , items , amount , address} = req.body;
+        const {origin} = req.headers
+         const orderData = {
+            userId, items ,address, amount , paymentMethod: "Stripe", payment:false, date: Date.now()
+         }
+
+      const newOrder = new orderModel(orderData);
+      await newOrder.save()
+
+      const options ={
+         amount: amount*100,
+         currency: currency.toUpperCase(),
+         receipt: newOrder._id.toString(),
+      }
+
+         razorpayInstance.orders.create(options , (error , order) => {
+         if(error){
+            console.log(error)
+            return res.json({success:false , message: error})
+         }
+         res.json({success: true , order})
+       })
 
     }catch(e){
+      
        console.log(e)
        res.json({success:false , message: error.message})
 

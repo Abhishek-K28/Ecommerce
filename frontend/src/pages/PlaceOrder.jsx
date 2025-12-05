@@ -29,6 +29,7 @@ const onChangeHandler = (event) => {
    const value = event.target.value;
 
    setFormData(data =>  {return {...data, [name]:value}})
+   setFormData({...formData , [name] : value})
 }
 
 const onSubmitHandler = async (e) => {
@@ -76,8 +77,11 @@ const onSubmitHandler = async (e) => {
       }
       break;
       
-      case " 0" :
-
+      case "razorpay" :
+    const resRazorpay = await axios.post(backenUrl+"/api/order/razorpay" ,orderData , {headers: {Authorization: `Bearer ${token}`}})
+    if(resRazorpay.data.success){
+      console.log(resRazorpay.data.order)
+    }
       break;
 
 
@@ -94,6 +98,27 @@ const onSubmitHandler = async (e) => {
          toast.error(e.message);
    }
 }
+
+const initPay = (order) => {
+    const options ={
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Order Payment",
+      description:  "prder Payment",
+      order_id: order.id,
+      reciept: order.reciept,
+      handler: async(response) => {
+         console.log(response);
+      }
+    }
+
+    const rzp = new window.Razorpay(options);
+      rzp.open();
+      
+}
+
+
 
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
