@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import VerifyPayment from "./pages/VerifyPayment"
+import VerifyPayment from "./pages/verifyPayment";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Collections from "./pages/Collections";
@@ -14,13 +14,16 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Searchbar from "./components/Searchbar";
 import { ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 const App = () => {
+  const location = useLocation();
+  const path = location.pathname.startsWith("/collection")
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] ">
       <ToastContainer />
       <Navbar />
-      <Searchbar />
+      {path && <Searchbar/>}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

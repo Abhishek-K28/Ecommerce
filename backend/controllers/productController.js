@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import productModel from "../models/productModel.js";
-import { timingSafeEqual } from "crypto";
-import { timeStamp } from "console";
+
+
 const addProduct = async (req, res) => {
   try {
     const {

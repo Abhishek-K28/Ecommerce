@@ -80,7 +80,7 @@ const onSubmitHandler = async (e) => {
       case "razorpay" :
     const resRazorpay = await axios.post(backenUrl+"/api/order/razorpay" ,orderData , {headers: {Authorization: `Bearer ${token}`}})
     if(resRazorpay.data.success){
-      console.log(resRazorpay.data.order)
+     initPay(resRazorpay.data.order)
     }
       break;
 
@@ -109,7 +109,16 @@ const initPay = (order) => {
       order_id: order.id,
       reciept: order.reciept,
       handler: async(response) => {
-         console.log(response);
+        try{
+         const  {data} = await axios.post(backenUrl+`/api/order/verifyRazorpay` , response , {headers:{Authorization: `Bearer ${token}`}})
+               if(data.success){
+                  navigate("/order")
+                  setCartItem({})
+               }
+        }catch(err){
+         console.log(err);
+         toast.error(err)
+        }
       }
     }
 
