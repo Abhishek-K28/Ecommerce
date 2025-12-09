@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import VerifyPayment from "./pages/verifyPayment";
+import VerifyPayment from "./pages/VerifyPayment";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Collections from "./pages/Collections";
