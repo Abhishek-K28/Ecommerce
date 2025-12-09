@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 4000;
 //Middleware
 
 app.use(cors({
-  origin:["http://localhost:5173", "http://localhost:5174" ,"https://forever-frontend-three-zeta.vercel.app/"],
+  origin:["http://localhost:5173", "http://localhost:5174" ,"https://forever-frontend-three-zeta.vercel.app"],
   credentials: true,
 }))
 app.use(express.json());
